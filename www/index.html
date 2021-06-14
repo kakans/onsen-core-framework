@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <meta name="viewport" content = "width = device-width, initial-scale = 1.0, minimum-scale = 1, maximum-scale = 1, user-scalable = no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="manifest" href="manifest.json">
+
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css"/>
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+
+  <script>
+    console.log("Hello")
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("Service Worker Registered"))
+        .catch(e => console.log(e));
+    }
+  </script>
+
+</head>
+<body>
+
+<template id="LandingHome.html">
+        <ons-page>
+            <ons-tabbar swipeable position="auto">
+                <ons-tab page="PageLogin.html" label="Sign In" icon="fa-user-circle-o" active>
+                    <ons-ripple></ons-ripple>
+                </ons-tab>
+                <ons-tab page="PageContact.html" label="Contact Us" icon="fa-user-plus">
+                    <ons-ripple></ons-ripple>
+                </ons-tab>
+            </ons-tabbar>
+        </ons-page>
+</template>
+
+<ons-splitter>
+    <ons-splitter-side id="mySplitter" swipeable width="250px" collapse swipe-target-width="50px">
+        <ons-page>
+            <ons-list-title class="font-heading capital top-margin bottom-margin">
+                <ons-icon icon="fa-user-circle-o"></ons-icon> <span id="spnusername"></span>
+            </ons-list-title>
+            <ons-list>
+                <ons-list-item onclick="Logout()" class='top-margin' tappable>
+                    <div class="left">
+                        Logout
+                    </div>
+                    <div class="right align-right">
+                        <ons-icon icon="fa-sign-out"></ons-icon>
+                    </div>
+                </ons-list-item>
+            </ons-list>
+        </ons-page>
+    </ons-splitter-side>
+    <ons-splitter-content>
+        <ons-navigator swipeable id="myNavigator" Page="LandingHome.html"></ons-navigator>
+    </ons-splitter-content>
+</ons-splitter>
+
+
+
+
+<!-- For Prod Uncomment Below line -->
+<script type="text/javascript" src="ConfigFile/InputFile_Prod.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/PageLogin.js"></script>
+<script type="text/javascript" src="js/PageHome.js"></script>
+
+<script>
+    //This function is for loading splitter in to all screens
+    window.fn = {};
+
+    window.fn.open = function () {
+        var menu = document.getElementById('mySplitter');
+        menu.open();
+    };
+
+    window.fn.load = function(page) {
+        var menu = document.getElementById('mySplitter');
+
+        var myNavigator = document.getElementById('myNavigator');
+        menu.close();
+        myNavigator.resetToPage(page, { animation: 'fade' });
+
+    };
+
+</script>
+
+</body>
+</html>
